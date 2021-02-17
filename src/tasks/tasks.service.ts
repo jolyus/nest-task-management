@@ -31,4 +31,10 @@ export class TasksService {
     deleteTask(id: string): void {
         this.tasks = this.tasks.filter(task => task.id !== id)
     }
+
+    updateTask(id: string, status: TaskStatus): Task {
+        let index = this.tasks.map(task => task.id).indexOf(id)
+        this.tasks[index].status = status;
+        return this.tasks[index];
+    }
 }
