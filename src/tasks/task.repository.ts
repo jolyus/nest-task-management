@@ -13,7 +13,6 @@ export class TaskRepository extends Repository<Task> {
         task.description = description;
         task.status = TaskStatus.OPEN;
         await task.save();
-        
         return task;
     }
 }
