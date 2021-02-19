@@ -44,7 +44,7 @@ export class TasksService {
 
     
     async removeTask(id: number): Promise<Task> {
-        let task = await this.getTaskById(id)
+        const task = await this.getTaskById(id)
 
         // uses remove method to delete task, accepts Task entity as argument
         return await this.taskRepository.remove(task);
@@ -52,19 +52,17 @@ export class TasksService {
 
     async deleteTask(id: number): Promise<void> {
         // uses delete method to delete task, accepts task id as argument
-        let result = await this.taskRepository.delete(id);
+        const result = await this.taskRepository.delete(id);
 
         if(result.affected === 0) throw new NotFoundException(`Task with ID: ${id} not found.`);
     }
 
-    // updateTask(id: string, status: TaskStatus): Task {
-    //     let index = this.tasks.map(task => task.id).indexOf(id);
-
-    //     if(index === -1) throw new NotFoundException(`Task with ID: ${id} not found.`)
-        
-    //     this.tasks[index].status = status;
-    //     return this.tasks[index];
-    // }
+    async updateTaskStatus(id: number, status: TaskStatus): Promise<Task> {
+        const task = await this.getTaskById(id);
+        task.status = status;
+        await task.save();
+        return task;
+    }
 
     // getTaskWithFilters(filterDto: getTasksFilterDto): Task[] {
     //     const { status, search } = filterDto;
