@@ -37,16 +37,19 @@ export class TasksService {
     }
 
     
-    // async removeTask(id: number): Promise<Task> {
-    //     const task = await this.getTaskById(id)
+    async removeTask(id: number, user: User): Promise<Task> {
+        const task = await this.getTaskById(id, user)
 
-    //     // uses remove method to delete task, accepts Task entity as argument
-    //     return await this.taskRepository.remove(task);
-    // }
+        // uses remove method to delete task, accepts Task entity as argument
+        return await this.taskRepository.remove(task);
+    }
 
-    async deleteTask(id: number): Promise<void> {
+    async deleteTask(
+        id: number,
+        user: User
+    ): Promise<void> {
         // uses delete method to delete task, accepts task id as argument
-        const result = await this.taskRepository.delete(id);
+        const result = await this.taskRepository.delete({ id, userId: user.id });
 
         if(result.affected === 0) throw new NotFoundException(`Task with ID: ${id} not found.`);
     }
