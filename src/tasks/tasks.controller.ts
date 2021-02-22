@@ -52,7 +52,7 @@ export class TasksController {
         return this.tasksService.deleteTask(id, user);
     }
 
-    @Patch('/status/:id')
+    @Patch('/:id/status')
     updateTaskStatus(
         @Param('id', ParseIntPipe) id: number, 
         @Body('status', TaskStatusValidationPipe) status: TaskStatus,
